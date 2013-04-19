@@ -1,0 +1,42 @@
+
+server {
+	listen 80 default_server;	
+	listen   [::]:80 default_server ipv6only=on; ## listen for ipv6
+
+	root /usr/share/nginx/www;
+	index index.php index.html index.htm;
+
+	server_name _;
+
+	charset utf-8;
+
+	error_page 404 /404.html;
+	include conf/h5bp.conf;
+
+	location = /favicon.ico {
+		log_not_found off;
+		access_log off;
+	}
+
+	location = /robots.txt {
+		allow all;
+		log_not_found off;
+		access_log off;
+	}
+
+	location ~* \.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\.php)?|xtmpl)$|^(\..*|Entries.*|Repository|Root|Tag|Template)$|\.php_ {
+		deny all;
+	}
+
+	location ~ /\. {
+		deny all;
+		access_log off;
+		log_not_found off;
+	}
+
+	location ~ \.php$ {
+		fastcgi_pass unix:/var/run/php5-fpm.sock;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+}
