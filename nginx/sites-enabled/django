@@ -25,6 +25,7 @@ server {
 
 	error_page 404 /404.html;
 	include conf/h5bp.conf;
+	charset utf-8;
 
 	# Check if a file exists at /var/www/domain/ for the incoming request.
 	# If it doesn't proxy to Gunicorn/Django.

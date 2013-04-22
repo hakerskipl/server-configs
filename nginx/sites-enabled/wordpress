@@ -5,12 +5,11 @@ server {
 }
 
 server {
-        ## Your website name goes here.
         server_name blog.mgjw.tk;
-        ## Your only path reference.
         root /www/wordpress;
-        ## This should be in your http block and if it is, it's not needed here.
         index index.php;
+        charset utf-8;
+        include conf/h5bp.conf;
  
         location = /favicon.ico {
                 log_not_found off;
@@ -24,23 +23,12 @@ server {
         }
  
         location / {
-                # This is cool because no php is touched for static content. 
-                # include the "?$args" part so non-default permalinks doesn't break when using query string
                 try_files $uri $uri/ /index.php?$args;
         }
  
         location ~ \.php$ {
-                #NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
-                #include fastcgi.conf;
-                #fastcgi_intercept_errors on;
-                #fastcgi_pass php;
 		fastcgi_pass unix:/var/run/php5-fpm.sock;
 		fastcgi_index index.php;
 		include fastcgi_params;
-        }
- 
-        location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
-                expires max;
-                log_not_found off;
         }
 }

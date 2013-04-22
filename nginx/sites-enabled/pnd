@@ -9,8 +9,6 @@ server {
 	server_name _;
 
 	charset utf-8;
-
-	error_page 404 /404.html;
 	include conf/h5bp.conf;
 
 	location = /favicon.ico {
